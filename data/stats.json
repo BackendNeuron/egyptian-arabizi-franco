@@ -1,0 +1,8 @@
+{
+ "seed_sentences": 412,
+ "template_sentences": 412,
+ "single_words": 651,
+ "human_spellings": 1463,
+ "generated_variants": 4997,
+ "test": 76
+}
