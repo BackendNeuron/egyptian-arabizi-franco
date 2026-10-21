@@ -31,6 +31,16 @@ Most remaining mistakes are long vowels (فاهم → فهم, حالا → حل�
 by guesswork. The full run, epoch by epoch, is in [train_colab.ipynb](train_colab.ipynb). The test set is small,
 so scores move a few points between epochs.
 
+Charts from that run (the line after "finetune" is where fine-tuning starts):
+
+![Word and whole-sentence accuracy on the test set, per epoch, through pre-training then fine-tuning](docs/charts/run1-accuracy.png)
+
+![Character error rate on the test set, per epoch](docs/charts/run1-cer.png)
+
+![Word accuracy on the test set by topic](docs/charts/run1-topics.png)
+
+![Training loss per epoch](docs/charts/run1-loss.png)
+
 ## The data
 
 <picture>

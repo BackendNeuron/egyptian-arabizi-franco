@@ -41,7 +41,7 @@ def figure(t, title, subtitle=None, size=(7.2, 3.6)):
     fig.text(0.02, 0.95, title, color=t["ink"], fontsize=11, fontweight="bold", va="top")
     if subtitle:
         fig.text(0.02, 0.885, subtitle, color=t["ink2"], fontsize=8.5, va="top")
-    fig.subplots_adjust(left=0.1, right=0.86, top=0.78, bottom=0.16)
+    fig.subplots_adjust(left=0.1, right=0.8, top=0.78, bottom=0.16)  # room for end labels on the right
     return fig, ax
 
 
