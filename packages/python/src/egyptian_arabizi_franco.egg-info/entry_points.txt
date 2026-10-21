@@ -1,2 +1,0 @@
-[console_scripts]
-egyptian-arabizi-franco = egyptian_arabizi_franco.cli:main

@@ -7,3 +7,6 @@ data/pretrain.tsv
 node_modules/
 packages/js/package-lock.json
 export/
+*.egg-info/
+dist/
+build/
