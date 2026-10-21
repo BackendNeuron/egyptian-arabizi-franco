@@ -1,4 +1,4 @@
-"""Exports a trained checkpoint to ONNX for the pip and npm packages, and checks the export.
+"""Exports a trained checkpoint to ONNX for the pip package, and checks the export.
 
   python tools/export_onnx.py runs/best.pt --out export/
 
