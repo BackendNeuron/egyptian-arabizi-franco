@@ -10,3 +10,5 @@ export/
 *.egg-info/
 dist/
 build/
+packages/js/models/
+packages/python/src/egyptian_arabizi_franco/models/
