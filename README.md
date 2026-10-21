@@ -107,11 +107,6 @@ cat chat.txt | egyptian-arabizi-franco
 Works offline on any CPU (about 50 ms a sentence on a laptop). Needs only `onnxruntime` and `numpy`; the model
 (about 13 MB) comes with the package. More options: [packages/python](packages/python/README.md).
 
-### JavaScript (Node and browsers)
-
-`npm install egyptian-arabizi-franco`: coming next, same `convert()` API. Code and README:
-[packages/js](packages/js/README.md).
-
 ### What the package does around the model
 
 - English work and tech words stay in Latin letters: `el meeting` → `الmeeting`, `el password` → `الpassword`
@@ -156,9 +151,8 @@ The character set is fixed in `training/charset.py`, so a saved model can always
 - [ ] snap outputs to real words from a word list (fixes near-misses like حلان → حالا)
 - [ ] more hand-written data (target 3–5k) and a bigger test set (~200 sentences)
 - [ ] training charts in this README (pushed from Colab after each run)
-- [x] ONNX export (`tools/export_onnx.py`, checked against the original model) and both packages' code
+- [x] ONNX export (`tools/export_onnx.py`, checked against the original model) and the Python package
 - [x] published on PyPI: `pip install egyptian-arabizi-franco` (0.1.0)
-- [ ] publish on npm: `npm install egyptian-arabizi-franco`
 - [ ] live demo page and browser extension
 
 ## Licence
