@@ -1,9 +1,9 @@
-"""Copies an exported model (tools/export_onnx.py) and the shared word list into both packages.
+"""Copies an exported model (tools/export_onnx.py) and the shared word list into the Python package.
 
   python tools/sync_packages.py export/
 
-Run it after every export; then bump the version in packages/python/pyproject.toml,
-packages/python/src/egyptian_arabizi_franco/__init__.py, packages/js/package.json and packages/js/src/index.js."""
+Run it after every export; then bump the version in packages/python/pyproject.toml and
+packages/python/src/egyptian_arabizi_franco/__init__.py, and add the release to CHANGELOG.md."""
 
 import shutil
 import sys
@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = ("encoder.onnx", "decoder.onnx", "vocab.json")
-TARGETS = (ROOT / "packages/python/src/egyptian_arabizi_franco", ROOT / "packages/js")
+TARGETS = (ROOT / "packages/python/src/egyptian_arabizi_franco",)
 
 
 def main():
@@ -24,7 +24,6 @@ def main():
         for f in FILES:
             shutil.copy2(src / f, target / "models" / f)
         shutil.copy2(ROOT / "packages/shared/english_words.txt", target / "english_words.txt")
-        shutil.copy2(ROOT / "LICENSE", target / "LICENSE") if target.name == "js" else None
         print("updated", target.relative_to(ROOT))
 
 

@@ -4,11 +4,8 @@ runs/*.pt
 *.onnx
 data/wiki/
 data/pretrain.tsv
-node_modules/
-packages/js/package-lock.json
 export/
 *.egg-info/
 dist/
 build/
-packages/js/models/
 packages/python/src/egyptian_arabizi_franco/models/

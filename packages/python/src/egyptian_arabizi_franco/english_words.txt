@@ -1,5 +1,5 @@
 # English words that stay in Latin letters (STYLE.md: work and tech words), one per line, lowercase.
-# Both packages load this list; keep it free of words that are also common Arabizi (men, law, bas, fen, da ...).
+# The Python package loads this list; keep it free of words that are also common Arabizi (men, law, bas, fen, da ...).
 # Social-media loanwords (like, share, post, order, app names) are written in Arabic: they are not here.
 account
 admin

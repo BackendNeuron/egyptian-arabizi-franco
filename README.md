@@ -134,6 +134,10 @@ curl -X POST localhost:8000/convert -H "Content-Type: application/json" -d '{"te
 # {"arabic": ["ايه الاخبار"]}
 ```
 
+The `curl` line is for bash (macOS, Linux, Git Bash). In Windows PowerShell, `curl` means a different built-in
+command: use `curl.exe` with the JSON in a file (`-d "@body.json"`), or open http://localhost:8000/docs and
+try the endpoint there.
+
 Tips for a backend:
 
 - **Create the `Converter` once**, at module level or at startup. Loading it takes around a second, so doing it on
