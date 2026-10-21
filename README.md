@@ -80,12 +80,47 @@ in Colab (no GPU needed) and Run all. It loads the model from your Google Drive 
 runs six tests: everyday phrases, one sentence spelled six ways, mixed English, unseen words, the score on the
 held-out test set with every miss listed, and CPU speed. The last cell has a box to type your own Arabizi.
 
-## Packages
+## Install and use
 
-`pip install egyptian-arabizi-franco` (Python) and `npm install egyptian-arabizi-franco` (Node and browsers) are
-being prepared: code in [packages/python](packages/python) and [packages/js](packages/js), each with its own
-README. They run the model with ONNX Runtime (no PyTorch, no GPU, no server) and add the rules around it:
-English work/tech words and numbers pass through, stretched letters are shortened. Not published yet.
+### Python
+
+[![PyPI](https://img.shields.io/pypi/v/egyptian-arabizi-franco)](https://pypi.org/project/egyptian-arabizi-franco/)
+
+```bash
+pip install egyptian-arabizi-franco
+```
+
+```python
+from egyptian_arabizi_franco import convert
+
+convert("ezayak 3amel eh")                       # 'ازيك عامل ايه' (the model writes ازايك for now)
+convert(["eh el a5bar", "3andy el meeting bokra"])  # ['ايه الاخبار', 'عندي الmeeting بكرة']
+```
+
+From the command line:
+
+```bash
+egyptian-arabizi-franco "ezayak 3amel eh"
+cat chat.txt | egyptian-arabizi-franco
+```
+
+Works offline on any CPU (about 50 ms a sentence on a laptop). Needs only `onnxruntime` and `numpy`; the model
+(about 13 MB) comes with the package. More options: [packages/python](packages/python/README.md).
+
+### JavaScript (Node and browsers)
+
+`npm install egyptian-arabizi-franco`: coming next, same `convert()` API. Code and README:
+[packages/js](packages/js/README.md).
+
+### What the package does around the model
+
+- English work and tech words stay in Latin letters: `el meeting` → `الmeeting`, `el password` → `الpassword`
+- numbers, punctuation and emojis pass through unchanged
+- stretched letters are shortened first: `awyyyy` → `awy`
+- long text is converted in runs of up to six words
+
+With these rules, version 0.1.0 gets **75.0% of words and 40.8% of whole sentences** right on the test set
+(the model alone: 73.6% / 36.8%).
 
 ## Train it
 
@@ -122,7 +157,8 @@ The character set is fixed in `training/charset.py`, so a saved model can always
 - [ ] more hand-written data (target 3–5k) and a bigger test set (~200 sentences)
 - [ ] training charts in this README (pushed from Colab after each run)
 - [x] ONNX export (`tools/export_onnx.py`, checked against the original model) and both packages' code
-- [ ] publish `pip install egyptian-arabizi-franco` and `npm install egyptian-arabizi-franco`
+- [x] published on PyPI: `pip install egyptian-arabizi-franco` (0.1.0)
+- [ ] publish on npm: `npm install egyptian-arabizi-franco`
 - [ ] live demo page and browser extension
 
 ## Licence
