@@ -100,4 +100,10 @@ same way (`s` for both س and ص). Results, charts and the training code:
 
 ## Licence
 
-MIT. The model was pre-trained on text from the Egyptian Arabic Wikipedia (CC BY-SA 4.0).
+MIT. The model was pre-trained on text from the [Egyptian Arabic Wikipedia](https://arz.wikipedia.org), by its
+contributors, used under the
+[Creative Commons Attribution-ShareAlike 4.0 licence](https://creativecommons.org/licenses/by-sa/4.0/). No Wikipedia
+text is included in this package, only the trained model.
+
+Built with [PyTorch](https://pytorch.org) (training) and [ONNX Runtime](https://onnxruntime.ai) (running the
+model).

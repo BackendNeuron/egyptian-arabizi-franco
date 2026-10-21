@@ -201,5 +201,18 @@ The character set is fixed in `training/charset.py`, so a saved model can always
 
 ## Licence
 
-MIT. Data in `data/seed/` was written for this project. Pre-training text: Egyptian Arabic Wikipedia
-contributors, CC BY-SA 4.0.
+The code, the hand-written data in `data/seed/` and the trained model are released under the MIT licence
+([LICENSE](LICENSE)). The data in `data/seed/` was written for this project.
+
+**Pre-training data.** The model was pre-trained on text from the
+[Egyptian Arabic Wikipedia](https://arz.wikipedia.org), by its contributors, used under the
+[Creative Commons Attribution-ShareAlike 4.0 licence](https://creativecommons.org/licenses/by-sa/4.0/)
+(the `20231101.arz` snapshot of [wikimedia/wikipedia](https://huggingface.co/datasets/wikimedia/wikipedia)).
+No Wikipedia text is included in this repository or in the package: `tools/build_pretrain.py` downloads it when
+you build the pre-training set, and only the trained model is published.
+
+## Built with
+
+[PyTorch](https://pytorch.org) for training, [ONNX](https://onnx.ai) and
+[ONNX Runtime](https://onnxruntime.ai) for running the model in the package, and [NumPy](https://numpy.org).
+Charts with [Matplotlib](https://matplotlib.org); data files read with [PyArrow](https://arrow.apache.org).
