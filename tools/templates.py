@@ -1,5 +1,5 @@
 """Sentence patterns with interchangeable parts. Every part is written in both scripts, so each generated
-sentence comes with a real human-style spelling (then varied by arabizi.variants like the seeds).
+sentence comes with a real human-style spelling (then varied by training.variants like the seeds).
 Patterns and parts are kept grammatical together: subjects carry the verb form they need."""
 
 import itertools

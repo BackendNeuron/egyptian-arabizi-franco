@@ -4,3 +4,6 @@ runs/*.pt
 *.onnx
 data/wiki/
 data/pretrain.tsv
+node_modules/
+packages/js/package-lock.json
+export/

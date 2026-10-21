@@ -16,8 +16,8 @@ from pathlib import Path
 import torch
 from torch import nn
 
-from arabizi.charset import BOS, CHARS, EOS, PAD, encode
-from arabizi.model import MAX_LEN, Transliterator, batchify
+from training.charset import BOS, CHARS, EOS, PAD, encode
+from training.model import MAX_LEN, Transliterator, batchify
 
 RUNS = Path("runs")
 

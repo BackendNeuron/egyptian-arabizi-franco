@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "egyptian-arabizi-franco"
+version = "0.1.0"
+description = "Egyptian Arabizi (Franco-Arabic) to Arabic, offline and lightweight: 3amel eh -> عامل ايه"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [{ name = "Mohamed Hossam" }]
+keywords = ["arabizi", "franco-arabic", "egyptian-arabic", "transliteration", "arabic", "onnx", "nlp"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Natural Language :: Arabic",
+    "Topic :: Text Processing :: Linguistic",
+    "Operating System :: OS Independent",
+]
+dependencies = ["onnxruntime>=1.16", "numpy>=1.21"]
+
+[project.urls]
+Homepage = "https://github.com/BackendNeuron/egyptian-arabizi-franco"
+Issues = "https://github.com/BackendNeuron/egyptian-arabizi-franco/issues"
+
+[project.scripts]
+egyptian-arabizi-franco = "egyptian_arabizi_franco.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+egyptian_arabizi_franco = ["models/*.onnx", "models/*.json", "english_words.txt"]

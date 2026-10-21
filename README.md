@@ -1,4 +1,4 @@
-# arabizi
+# egyptian-arabizi-franco
 
 Egyptian **Arabizi → Arabic**, offline and lightweight: `3amel eh` → `عامل ايه`.
 
@@ -52,7 +52,7 @@ Charts from that run (the line after "finetune" is where fine-tuning starts):
   feelings and slang, football and media, questions and plans). About 15% of them are held out as the test set.
 - **Template sentences** (`tools/templates.py`): patterns with interchangeable parts, each written in both
   scripts, so every generated sentence still comes with a natural spelling.
-- **Generated spellings** (`arabizi/variants.py`): each sentence's Arabizi respelled the ways other people
+- **Generated spellings** (`training/variants.py`): each sentence's Arabizi respelled the ways other people
   type it. English words are never changed.
 - **Single words and two-word chunks** cut from the hand-written sentences, so the model learns the letter
   mapping and doesn't just recall whole sentences.
@@ -64,7 +64,7 @@ Before it sees the hand-written data, the model is pre-trained on a large synthe
 (`tools/build_pretrain.py`): short chunks of Egyptian Arabic from the
 [Egyptian Arabic Wikipedia](https://arz.wikipedia.org) (the `20231101.arz` snapshot of
 [wikimedia/wikipedia](https://huggingface.co/datasets/wikimedia/wikipedia), CC BY-SA 4.0), written in Arabizi by
-`arabizi/variants.py`. The text is downloaded when you build the set and is not part of this repo.
+`training/variants.py`. The text is downloaded when you build the set and is not part of this repo.
 With only hand-written data the first model got 15% of words right on the test set, guessing Arabic-looking
 words instead of converting letters; pre-training on a few hundred thousand varied chunks is what fixes that.
 
@@ -75,10 +75,17 @@ words instead of converting letters; pre-training on a few hundred thousand vari
 
 ## Try it
 
-Open [infer_colab.ipynb](https://colab.research.google.com/github/BackendNeuron/arabizi/blob/main/infer_colab.ipynb)
+Open [infer_colab.ipynb](https://colab.research.google.com/github/BackendNeuron/egyptian-arabizi-franco/blob/main/infer_colab.ipynb)
 in Colab (no GPU needed) and Run all. It loads the model from your Google Drive (or a `.pt` file you upload) and
 runs six tests: everyday phrases, one sentence spelled six ways, mixed English, unseen words, the score on the
 held-out test set with every miss listed, and CPU speed. The last cell has a box to type your own Arabizi.
+
+## Packages
+
+`pip install egyptian-arabizi-franco` (Python) and `npm install egyptian-arabizi-franco` (Node and browsers) are
+being prepared: code in [packages/python](packages/python) and [packages/js](packages/js), each with its own
+README. They run the model with ONNX Runtime (no PyTorch, no GPU, no server) and add the rules around it:
+English work/tech words and numbers pass through, stretched letters are shortened. Not published yet.
 
 ## Train it
 
@@ -101,7 +108,7 @@ python tools/build_dataset.py
 python train.py --continue-from runs/best.pt --epochs 20
 ```
 
-The character set is fixed in `arabizi/charset.py`, so a saved model can always continue training.
+The character set is fixed in `training/charset.py`, so a saved model can always continue training.
 
 
 ## Roadmap
@@ -114,7 +121,8 @@ The character set is fixed in `arabizi/charset.py`, so a saved model can always 
 - [ ] snap outputs to real words from a word list (fixes near-misses like حلان → حالا)
 - [ ] more hand-written data (target 3–5k) and a bigger test set (~200 sentences)
 - [ ] training charts in this README (pushed from Colab after each run)
-- [ ] ONNX export, `pip install arabizi`, `npm install arabizi` (runs in the browser)
+- [x] ONNX export (`tools/export_onnx.py`, checked against the original model) and both packages' code
+- [ ] publish `pip install egyptian-arabizi-franco` and `npm install egyptian-arabizi-franco`
 - [ ] live demo page and browser extension
 
 ## Licence

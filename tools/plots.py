@@ -144,7 +144,7 @@ def by_model(path):
     sys.path.insert(0, str(ROOT))
     import torch
 
-    from arabizi.model import Transliterator
+    from training.model import Transliterator
 
     ck = torch.load(path, map_location="cpu")
     model = Transliterator(**ck["config"])

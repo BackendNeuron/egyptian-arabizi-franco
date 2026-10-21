@@ -8,7 +8,7 @@ on it is. Steps:
   3. drop duplicates and cap repeated patterns (many articles are bot-written stubs that share their wording)
   4. cut short chunks of 1-4 words from each sentence: chunks are easier to learn than whole sentences, and
      full sentences are converted chunk by chunk later anyway
-  5. write each chunk's Arabizi with arabizi.variants.from_arabic, using the hand-written spellings for words
+  5. write each chunk's Arabizi with training.variants.from_arabic, using the hand-written spellings for words
      the seeds already have, letter rules for the rest
 Run: python tools/build_pretrain.py [--files 2] [--max-pairs 300000]"""
 
@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-from arabizi.variants import from_arabic, word_table  # noqa: E402
+from training.variants import from_arabic, word_table  # noqa: E402
 from build_dataset import is_test, load_seeds  # noqa: E402
 
 URL = "https://huggingface.co/datasets/wikimedia/wikipedia/resolve/main/20231101.arz/train-0000{i}-of-00003.parquet"
