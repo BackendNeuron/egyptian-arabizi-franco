@@ -73,6 +73,13 @@ words instead of converting letters; pre-training on a few hundred thousand vari
   <img alt="Characters per Arabizi input in the training set" src="docs/charts/lengths-light.png">
 </picture>
 
+## Try it
+
+Open [infer_colab.ipynb](https://colab.research.google.com/github/BackendNeuron/arabizi/blob/main/infer_colab.ipynb)
+in Colab (no GPU needed) and Run all. It loads the model from your Google Drive (or a `.pt` file you upload) and
+runs six tests: everyday phrases, one sentence spelled six ways, mixed English, unseen words, the score on the
+held-out test set with every miss listed, and CPU speed. The last cell has a box to type your own Arabizi.
+
 ## Train it
 
 On Colab (free T4 GPU, minutes): open [train_colab.ipynb](train_colab.ipynb) and Run all. Checkpoints are
