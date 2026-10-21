@@ -60,16 +60,20 @@ def main():
     ap.add_argument("--batch", type=int, default=128)
     ap.add_argument("--lr", type=float, default=None, help="default 5e-4 for a new model, 1.5e-4 when continuing")
     ap.add_argument("--patience", type=int, default=6, help="stop after this many epochs without improvement")
+    ap.add_argument("--train-file", default="data/train.tsv", help="data/pretrain.tsv for the pre-training stage")
+    ap.add_argument("--name", default="", help="checkpoint prefix: 'pretrain-' saves runs/pretrain-best.pt")
+    ap.add_argument("--stage", default="train", help="label for this run in the history and the charts")
     a = ap.parse_args()
     dev = "cuda" if torch.cuda.is_available() else "cpu"
     RUNS.mkdir(exist_ok=True)
-    train, test = read("data/train.tsv"), read("data/test.tsv")
+    train, test = read(a.train_file), read("data/test.tsv")
+    last_pt, best_pt = RUNS / f"{a.name}last.pt", RUNS / f"{a.name}best.pt"
 
     start, best, ck = 0, -1.0, None
     if a.new:
         model, lr = Transliterator(), a.lr or 5e-4
     else:
-        ck = torch.load(RUNS / "last.pt" if a.resume else a.continue_from, map_location="cpu")
+        ck = torch.load(last_pt if a.resume else a.continue_from, map_location="cpu")
         assert ck["chars"] == CHARS, "the character set changed, so this model cannot continue"
         model = Transliterator(**ck["config"])
         model.load_state_dict(ck["model"])
@@ -107,21 +111,21 @@ def main():
         exact, word, c = evaluate(model, test)
         print(f"epoch {ep + 1:>3} · loss {tot / len(train):.3f} · test: sentences {exact:.1%} · words {word:.1%}"
               f" · char errors {c:.1%} · {time.time() - t0:.0f}s", flush=True)
-        history.append(dict(run=run, epoch=len(history) + 1, loss=tot / len(train), sentences=exact, words=word,
+        history.append(dict(run=run, stage=a.stage, epoch=len(history) + 1, loss=tot / len(train), sentences=exact, words=word,
                             cer=c, lr=lr, seconds=time.time() - t0, train_pairs=len(train), device=dev))
         hist_path.write_text(json.dumps(history, indent=1))
         state = dict(model=model.state_dict(), opt=opt.state_dict(), config=model.config, chars=CHARS,
                      epoch=ep, best=max(best, word), lr=lr)
-        torch.save(state, RUNS / "last.pt")
+        torch.save(state, last_pt)
         if word > best:
             best, stale = word, 0
-            torch.save(state, RUNS / "best.pt")
+            torch.save(state, best_pt)
         else:
             stale += 1
             if stale >= a.patience:
                 print(f"no improvement for {a.patience} epochs: stopping")
                 break
-    model.load_state_dict(torch.load(RUNS / "best.pt", map_location=dev)["model"])
+    model.load_state_dict(torch.load(best_pt, map_location=dev)["model"])
     print("best model on the test set:")
     evaluate(model, test, show=12)
 

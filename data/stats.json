@@ -1,8 +1,8 @@
 {
  "seed_sentences": 412,
  "template_sentences": 412,
- "single_words": 651,
- "human_spellings": 1463,
- "generated_variants": 4997,
+ "single_words": 1123,
+ "human_spellings": 1934,
+ "generated_variants": 6628,
  "test": 76
 }

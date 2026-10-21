@@ -62,7 +62,7 @@ def run_breaks(ax, t, hist):
     for prev, cur in zip(hist, hist[1:]):
         if cur["run"] != prev["run"]:
             ax.axvline(cur["epoch"] - 0.5, color=t["ink2"], linewidth=0.8, linestyle=(0, (3, 3)), alpha=0.6)
-            ax.annotate(f"run {cur['run'] + 1}", (cur["epoch"] - 0.5, 1), xycoords=("data", "axes fraction"),
+            ax.annotate(cur.get("stage", f"run {cur['run'] + 1}"), (cur["epoch"] - 0.5, 1), xycoords=("data", "axes fraction"),
                         xytext=(4, -10), textcoords="offset points", fontsize=7.5, color=t["ink2"])
 
 

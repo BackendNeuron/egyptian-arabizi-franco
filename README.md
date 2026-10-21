@@ -43,7 +43,19 @@ in [docs/charts/mistakes.md](docs/charts/mistakes.md).
   scripts, so every generated sentence still comes with a natural spelling.
 - **Generated spellings** (`arabizi/variants.py`): each sentence's Arabizi respelled the ways other people
   type it. English words are never changed.
+- **Single words and two-word chunks** cut from the hand-written sentences, so the model learns the letter
+  mapping and doesn't just recall whole sentences.
 - All Arabic targets follow one spelling standard: [STYLE.md](STYLE.md).
+
+### Pre-training
+
+Before it sees the hand-written data, the model is pre-trained on a large synthetic set
+(`tools/build_pretrain.py`): short chunks of Egyptian Arabic from the
+[Egyptian Arabic Wikipedia](https://arz.wikipedia.org) (the `20231101.arz` snapshot of
+[wikimedia/wikipedia](https://huggingface.co/datasets/wikimedia/wikipedia), CC BY-SA 4.0), written in Arabizi by
+`arabizi/variants.py`. The text is downloaded when you build the set and is not part of this repo.
+With only hand-written data the first model got 15% of words right on the test set, guessing Arabic-looking
+words instead of converting letters; pre-training on a few hundred thousand varied chunks is what fixes that.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/charts/lengths-dark.png">
@@ -82,6 +94,7 @@ The character set is fixed in `arabizi/charset.py`, so a saved model can always 
 
 - [x] spelling standard, hand-written seed data, spelling-variant generator, templates
 - [x] trainer with new / resume / continue modes, Colab notebook, charts
+- [x] pre-training on synthetic data from the Egyptian Arabic Wikipedia
 - [ ] first trained model and published results
 - [ ] more hand-written data (target 3–5k), then AI-generated sentences checked by the rules
 - [ ] ONNX export, `pip install arabizi`, `npm install arabizi` (runs in the browser)
@@ -89,4 +102,5 @@ The character set is fixed in `arabizi/charset.py`, so a saved model can always 
 
 ## Licence
 
-MIT. Data in `data/seed/` was written for this project.
+MIT. Data in `data/seed/` was written for this project. Pre-training text: Egyptian Arabic Wikipedia
+contributors, CC BY-SA 4.0.

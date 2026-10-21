@@ -62,6 +62,14 @@ def from_arabic(text: str, rnd: random.Random | None = None, words: dict[str, li
     return " ".join(out)
 
 
+def aligned(pairs: list[tuple[str, str]]):
+    """(arabic words, arabizi words) for each pair whose two sides line up word for word."""
+    for ar, az in pairs:
+        a, z = ar.split(), re.sub(r"\b(el|al|il)\s+(?=\S)", r"\1_", az).split()
+        if len(a) == len(z):
+            yield a, [w.replace("_", " ") for w in z]
+
+
 def word_table(pairs: list[tuple[str, str]]) -> dict[str, list[str]]:
     """Arabic word -> Arabizi spellings, from pairs whose two sides have the same number of words."""
     table: dict[str, list[str]] = {}

@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-from arabizi.variants import vary, word_table  # noqa: E402
+from arabizi.variants import aligned, vary, word_table  # noqa: E402
 from templates import generate  # noqa: E402
 
 
@@ -60,6 +60,11 @@ def main():
     word_pairs = sorted({(ar, sp) for ar, spellings in words.items() for sp in spellings})
     train_src += word_pairs
     n_words = len(word_pairs)
+    # and two-word chunks, the same size as the pre-training chunks
+    pairs2 = {(" ".join(a2[i:i + 2]), " ".join(z2[i:i + 2]))
+              for a2, z2 in aligned(train_src[:n_seed]) if len(a2) > 2 for i in range(len(a2) - 1)}
+    train_src += sorted(pairs2)
+    n_words += len(pairs2)
 
     train, human = set(), set()
     for ar, az in train_src:

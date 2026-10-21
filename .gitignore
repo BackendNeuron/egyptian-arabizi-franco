@@ -2,3 +2,5 @@ __pycache__/
 runs/*.pt
 .venv/
 *.onnx
+data/wiki/
+data/pretrain.tsv
