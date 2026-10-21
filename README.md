@@ -2,7 +2,7 @@
 
 Egyptian **Arabizi → Arabic**, offline and lightweight: `3amel eh` → `عامل ايه`.
 
-A tiny character-level transformer (about 3M parameters) that runs on a CPU in milliseconds. It handles the
+A tiny character-level transformer (about 3M parameters) that runs on an ordinary CPU, no GPU needed. It handles the
 way people really type: number letters (3, 7, 2, 5), doubled letters, missing vowels, mixed English
 (`el meeting bokra` → `الmeeting بكرة`) and stretched words (`awyyy`).
 
@@ -150,6 +150,10 @@ Tips for a backend:
 - **Speed is a rough guide, not a promise:** in our tests on an ordinary laptop CPU, a short sentence took
   somewhere around 50 to 100 ms on its own, and less per sentence when sent in a batch. Your numbers will depend
   on the machine, the text length and how many requests arrive together, so measure on your own server.
+- **CPU and memory, also a rough guide:** the loaded model takes roughly 60 MB of RAM. By default ONNX Runtime
+  spreads the work over several CPU cores (about 4 of 8 on our laptop for a big batch); `Converter(threads=1)`
+  keeps it to one core, roughly twice as slow per sentence in our test, which can suit a server running several
+  workers. No GPU is used or needed.
 
 ### What the package does around the model
 
