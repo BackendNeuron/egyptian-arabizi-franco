@@ -47,10 +47,50 @@ egyptian-arabizi-franco "ezayak 3amel eh"
 cat chat.txt | egyptian-arabizi-franco          # one line in, one line out
 ```
 
+## In a FastAPI backend
+
+```python
+from fastapi import FastAPI
+from pydantic import BaseModel, Field
+from egyptian_arabizi_franco import Converter
+
+app = FastAPI()
+converter = Converter()  # load the model once, when the server starts
+
+
+class ConvertRequest(BaseModel):
+    texts: list[str] = Field(max_length=100)  # e.g. {"texts": ["ezayak 3amel eh", "eh el a5bar"]}
+
+
+@app.post("/convert")
+def convert(req: ConvertRequest):  # plain def: FastAPI runs it in a worker thread
+    return {"arabic": converter.convert([t[:500] for t in req.texts])}
+```
+
+```bash
+pip install egyptian-arabizi-franco fastapi uvicorn
+uvicorn main:app
+curl -X POST localhost:8000/convert -H "Content-Type: application/json" -d '{"texts": ["eh el a5bar"]}'
+# {"arabic": ["ايه الاخبار"]}
+```
+
+Tips for a backend:
+
+- **Create the `Converter` once**, at module level or at startup. Loading it takes around a second, so doing it on
+  every request would add that to each one.
+- **Use `def`, not `async def`, for the endpoint.** The conversion is CPU work, so FastAPI should run it in its
+  thread pool instead of blocking the event loop. One converter can be used from several threads at once.
+- **Send lists when you have several texts.** One call with 50 texts is much faster than 50 calls with one.
+- **Limit the input size** (the example allows 100 texts of up to 500 characters) so one huge request can't hog
+  the CPU.
+- **Speed is a rough guide, not a promise:** in our tests on an ordinary laptop CPU, a short sentence took
+  somewhere around 50 to 100 ms on its own, and less per sentence when sent in a batch. Your numbers will depend
+  on the machine, the text length and how many requests arrive together, so measure on your own server.
+
 ## How good is it?
 
-On held-out, human-written Egyptian Arabizi: about **74% of words** and **37% of whole sentences** exactly right
-(version 0.1.0). Typical mistakes are long vowels (`fahem` → فهم instead of فاهم) and letters Arabizi writes the
+On held-out, human-written Egyptian Arabizi: **75% of words** and **41% of whole sentences** exactly right
+(the 0.1.x model, with the rules above). Typical mistakes are long vowels (`fahem` → فهم instead of فاهم) and letters Arabizi writes the
 same way (`s` for both س and ص). Results, charts and the training code:
 [github.com/BackendNeuron/egyptian-arabizi-franco](https://github.com/BackendNeuron/egyptian-arabizi-franco).
 

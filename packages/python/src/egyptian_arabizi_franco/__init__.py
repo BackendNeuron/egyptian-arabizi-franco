@@ -4,14 +4,14 @@
     convert("ezayak 3amel eh")              # 'ازيك عامل ايه'
     convert(["yalla bina", "el meeting bokra"])
 
-The first call loads the model (a few MB, bundled with the package); later calls reuse it."""
+The first call loads the model (about 13 MB, bundled with the package); later calls reuse it."""
 
 from pathlib import Path
 
 from .engine import Engine
 from .pipeline import assemble, load_english, plan
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = ["convert", "Converter", "__version__"]
 
 HERE = Path(__file__).parent
