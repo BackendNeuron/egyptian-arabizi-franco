@@ -154,7 +154,7 @@ Tips for a backend:
 - stretched letters are shortened first: `awyyyy` → `awy`
 - long text is converted in runs of up to six words
 
-With these rules, version 0.1.0 gets **75.0% of words and 40.8% of whole sentences** right on the test set
+With these rules, the current package (0.1.1; same model as 0.1.0) gets **75.0% of words and 40.8% of whole sentences** right on the test set
 (the model alone: 73.6% / 36.8%).
 
 ## Train it
@@ -192,7 +192,7 @@ The character set is fixed in `training/charset.py`, so a saved model can always
 - [ ] more hand-written data (target 3–5k) and a bigger test set (~200 sentences)
 - [ ] training charts in this README (pushed from Colab after each run)
 - [x] ONNX export (`tools/export_onnx.py`, checked against the original model) and the Python package
-- [x] published on PyPI: `pip install egyptian-arabizi-franco` (0.1.0)
+- [x] published on PyPI: `pip install egyptian-arabizi-franco` (0.1.0, then 0.1.1 with the FastAPI guide; see [CHANGELOG.md](CHANGELOG.md))
 - [ ] live demo page and browser extension
 
 ## Licence
